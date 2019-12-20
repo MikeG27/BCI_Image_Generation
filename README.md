@@ -1,7 +1,7 @@
 eeg2image
 ==============================
 
-My reasearch related to possibility of convesrsion EEG signal to visual stimuuly
+My reasearch related to the possibility of conversion EEG signal to visual stimuly.
 
 Project Organization
 ------------
