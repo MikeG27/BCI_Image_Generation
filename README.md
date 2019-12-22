@@ -1,7 +1,6 @@
 eeg2image - Brain Computer Interface Python project 
 ==============================
-
-This repository contains code 4 generating images from human brain 
+The aim of this project is to build generative neural networks architecture in order to generate images based on EEG signal from human brain. For this particular task author use mobile BCI of EMOTIV company in order to get data from human brain.
 
 ![Zrzut ekranu 2019-12-20 o 17 12 21](https://user-images.githubusercontent.com/21131348/71267987-34e30000-234c-11ea-9cce-81f35ff6a20c.png) 
 
