@@ -1,9 +1,19 @@
 eeg2image
 ==============================
-![Zrzut ekranu 2019-12-20 o 17 12 21](https://user-images.githubusercontent.com/21131348/71267987-34e30000-234c-11ea-9cce-81f35ff6a20c.png)
+
+This repository contains code 4 generating images from human brain 
+
+![Zrzut ekranu 2019-12-20 o 17 12 21](https://user-images.githubusercontent.com/21131348/71267987-34e30000-234c-11ea-9cce-81f35ff6a20c.png) 
 
 
-My reasearch related to the possibility of conversion EEG signal to visual stimuly.
+Tasks:
+------------------
+0. Perform some reseach about generative models [x] 
+1. **Get EEG data** from Emotiv EPOC Neuroheadset []
+2. **Train VAE** to generate visual stimuly based on EEG signal []
+3. **Train** CNN classifier in order to classify generated images [x]
+4. **Build web aplication** to test both models []
+5. [Optionally] **Build other generative architecture** (GAN) [] 
 
 Project Organization
 ------------
