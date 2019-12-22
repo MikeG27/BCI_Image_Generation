@@ -1,4 +1,4 @@
-eeg2image
+eeg2image - Brain Computer Interface Python project 
 ==============================
 
 This repository contains code 4 generating images from human brain 
@@ -8,12 +8,13 @@ This repository contains code 4 generating images from human brain
 
 Tasks:
 ------------------
-0. Perform some reseach about generative models [x] 
-1. **Get EEG data** from Emotiv EPOC Neuroheadset []
-2. **Train VAE** to generate visual stimuly based on EEG signal []
-3. **Train** CNN classifier in order to classify generated images [x]
-4. **Build web aplication** to test both models []
-5. [Optionally] **Build other generative architecture** (GAN) [] 
+
+0. ~~Perform some reseach about generative models~~
+1. **Get EEG data** from Emotiv EPOC Neuroheadset 
+2. **Train VAE** to generate visual stimuly based on EEG signal 
+3. ~~**Train** CNN classifier in order to classify generated images~~
+4. **Build web aplication** to test both models 
+5. [Optionally] **Build other generative architecture** (GAN) 
 
 Project Organization
 ------------
@@ -45,7 +46,7 @@ Project Organization
     │
     ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
     ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
+    │   ├── __init__.py    <- Makes src a Python modu
     │   │
     │   ├── data           <- Scripts to download or generate data
     │   │   └── make_dataset.py
