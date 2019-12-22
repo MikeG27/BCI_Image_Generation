@@ -2,7 +2,9 @@ BCI Image EEG Generator
 ==============================
 The aim of this project is to build generative neural networks architecture in order to generate images based on EEG signal from human brain. For this particular task author use mobile BCI of [EMOTIV](https://www.emotiv.com/epoc/) company in order to get data from human brain.
 
-![Zrzut ekranu 2019-12-20 o 17 12 21](https://user-images.githubusercontent.com/21131348/71267987-34e30000-234c-11ea-9cce-81f35ff6a20c.png) 
+Idea 
+--------------
+![Concept](https://user-images.githubusercontent.com/21131348/71324862-9342e680-24e4-11ea-9600-6d1373a498ad.png)
 
 
 Tasks:
