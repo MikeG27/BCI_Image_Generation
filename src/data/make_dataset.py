@@ -1,30 +1,43 @@
-# -*- coding: utf-8 -*-
-import click
-import logging
-from pathlib import Path
-from dotenv import find_dotenv, load_dotenv
+import os
+import cv2
+import matplotlib.pyplot as plt
+from tqdm import tqdm
+from keras.datasets import mnist
+
+import config
 
 
-@click.command()
-@click.argument('input_filepath', type=click.Path(exists=True))
-@click.argument('output_filepath', type=click.Path())
-def main(input_filepath, output_filepath):
+def generate_image_dataset(X, y, output_dir, width=300, height=300, cmap="gray"):
+    """
+    Generate 300x300 gray images from mnist dataset and extract images to train/test folder
+    :param X: numpy images list
+    :param y: numpy class list
+    :param output_dir: output directory for generated images
+    :return:
+    """
+
+    if len(os.listdir(output_dir)) != 0 :
+        print(f"Directory {output_dir} is not empty")
+        return
+
+    dim = (width, height)
+    for i in tqdm(range(len(X))):
+        numpy_img = X[i]
+        image_number = y[i]
+        resized_img = cv2.resize(numpy_img, dim, interpolation=cv2.INTER_AREA)
+        plt.imsave(f"{output_dir}/image{i}_number{image_number}.png", resized_img, cmap="gray")
+
+def generate_image_csv():
+    pass
+
+def main():
+    (x_train, y_train), (x_test, y_test) = mnist.load_data()
+    generate_image_dataset(x_train, y_train, output_dir=config.IMG_TRAIN_RAW_DIR)
+    generate_image_dataset(x_test, y_test, output_dir=config.IMG_TEST_RAW_DIR)
+
     """ Runs data processing scripts to turn raw data from (../raw) into
         cleaned data ready to be analyzed (saved in ../processed).
     """
-    logger = logging.getLogger(__name__)
-    logger.info('making final data set from raw data')
-
 
 if __name__ == '__main__':
-    log_fmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    logging.basicConfig(level=logging.INFO, format=log_fmt)
-
-    # not used in this stub but often useful for finding various files
-    project_dir = Path(__file__).resolve().parents[2]
-
-    # find .env automagically by walking up directories until it's found, then
-    # load up the .env entries as environment variables
-    load_dotenv(find_dotenv())
-
     main()
