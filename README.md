@@ -2,7 +2,7 @@
 
 Preview 
 ------------
-![Screenshot from 2019-12-23 00-36-08](https://user-images.githubusercontent.com/21131348/71328741-55fa4b00-251c-11ea-8cd3-6369007b43cf.png)
+![Screenshot from 2020-01-04 23-03-57](https://user-images.githubusercontent.com/21131348/71772164-afb03b80-2f46-11ea-86c4-b5431319245c.png)
 
 
 The aim of this project is to build generative neural networks architecture in order to generate images based on EEG signal from human brain. For this particular task author use mobile BCI of [EMOTIV](https://www.emotiv.com/epoc/) company in order to get data from human brain.
