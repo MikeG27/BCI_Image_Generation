@@ -8,7 +8,7 @@ from tqdm import tqdm
 import config
 
 
-def generate_image_dataset(X,output_dir, width=300, height=300):
+def generate_image_dataset(X, width=300, height=300):
     """
     Generate 300x300 gray images from mnist dataset and extract images to train/test folder
     :param X: numpy images list
@@ -19,10 +19,6 @@ def generate_image_dataset(X,output_dir, width=300, height=300):
     """
 
     image_list = []
-
-    if len(os.listdir(output_dir)) != 0:
-        print(f"Directory {output_dir} is not empty")
-        return
 
     dim = (width, height)
     for i in tqdm(range(len(X))):
