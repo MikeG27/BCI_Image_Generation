@@ -1,5 +1,8 @@
 <h1 align = "center"> BCI Image EEG Generator<h1>
 
+Status - in progress
+-----------
+
 Preview 
 ------------
 ![Screenshot from 2020-01-04 23-03-57](https://user-images.githubusercontent.com/21131348/71772164-afb03b80-2f46-11ea-86c4-b5431319245c.png)
@@ -17,7 +20,7 @@ Tasks:
 
 0. ~~Perform some reseach about generative models~~
 1. ~~**Generate image dataset** as visual stimulus~~ 
-2. **Get EEG data** from [Emotiv EPOC Neuroheadset](https://www.emotiv.com/epoc/) 
+2. ~~**Get EEG data** from [Emotiv EPOC Neuroheadset](https://www.emotiv.com/epoc/)~~
 3. **Train VAE** to generate visual stimuly based on EEG signal 
 4. ~~**Train** CNN classifier in order to classify generated images~~
 5. **Build web aplication** to test both models 
