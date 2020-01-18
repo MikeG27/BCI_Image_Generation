@@ -1,0 +1,7 @@
+md5: 09478cba0e35a2e5a5b34213d87081d0
+outs:
+- md5: cd534e8a648fe6b5265e4d81edd6d5cc
+  path: mnist-64s.csv
+  cache: true
+  metric: false
+  persist: false
