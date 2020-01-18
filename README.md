@@ -1,30 +1,89 @@
-<h1 align = "center"> BCI Image EEG Generator<h1>
+<h1 align = "center"> BCI Image EEG Generator (in progress)</h1>
 
-Status - in progress
------------
-
-Preview 
-------------
 ![Screenshot from 2020-01-04 23-03-57](https://user-images.githubusercontent.com/21131348/71772164-afb03b80-2f46-11ea-86c4-b5431319245c.png)
 
 
-The aim of this project is to build generative neural networks architecture in order to generate images based on EEG signal from human brain. For this particular task author use mobile BCI of [EMOTIV](https://www.emotiv.com/epoc/) company in order to get data from human brain.
+## About The Project
 
-Idea 
---------------
-![Concept](https://user-images.githubusercontent.com/21131348/71324862-9342e680-24e4-11ea-9600-6d1373a498ad.png)
-
+The aim of this project is to generate images from human brain based on EEG signal. In order to do this task author build generative neural network architecture called Variational Autoencoder (VAE) .
+For this particular task author get data throught mobile Brain-Computer-Interface of [EMOTIV](https://www.emotiv.com/epoc/) company in order to get data from human brain.
 
 Tasks:
 ------------------
 
-0. ~~Perform some reseach about generative models~~
-1. ~~**Generate image dataset** as visual stimulus~~ 
+0. ~~Do reseach about generative models~~
+1. ~~**Prepare software 4 experiment** as visual stimulus~~ 
 2. ~~**Get EEG data** from [Emotiv EPOC Neuroheadset](https://www.emotiv.com/epoc/)~~
-3. **Train VAE** to generate visual stimuly based on EEG signal 
+3. ~~Perform data analysis~~
+5. Build **preprocessing** pipeline
+3. ~~**Train VAE** to generate visual stimuly based on EEG signal~~ 
 4. ~~**Train** CNN classifier in order to classify generated images~~
 5. **Build web aplication** to test both models 
 6. [Optionally] **Build other generative architecture** (GAN)
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+This is an example of how you may give instructions on setting up your project locally.
+To get a local copy up and running follow these simple example steps.
+
+
+### Prerequisites
+
+This is an example of how to list things you need to use the software and how to install them.
+* npm
+```sh
+npm install npm@latest -g
+```
+
+### Installation
+
+1. Get a free API Key at [https://example.com](https://example.com)
+2. Clone the repo
+```sh
+git clone https://github.com/your_username_/Project-Name.git
+```
+3. Install NPM packages
+```sh
+npm install
+```
+4. Enter your API in `config.js`
+```JS
+const API_KEY = 'ENTER YOUR API';
+```
+
+<!-- USAGE EXAMPLES -->
+## Usage
+
+Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+
+_For more examples, please refer to the [Documentation](https://example.com)_
+
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request<!-- LICENSE -->
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+
+<!-- CONTACT -->
+## Contact
+
+Em@il : - [gorskimichal27@gmail.com](gorskimichal27@gmail.com) 
+            
+Linkedin : [https://www.linkedin.com/in/migorski/](https://www.linkedin.com/in/migorski/)
+
 
 
 Project Organization
@@ -80,5 +139,3 @@ Project Organization
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
 
-References :
-------------
