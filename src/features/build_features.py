@@ -1,9 +1,43 @@
+import argparse
+import os
+
 import cv2
 import numpy as np
 import pandas as pd
+from keras.datasets import mnist
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, quantile_transform
 from sklearn.preprocessing import PowerTransformer
 
+import config
+from config import DATA_PREPROCESSED_DIR
+from config import train_ratio,test_ratio,validation_ratio
+from src.utils.preprocessing import save_preprocessing_object
+
+
+def parser():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('-f', type=str, default="mnist-64s.csv",
+                        help="csv file in raw folder")
+
+    parser.add_argument('-s', type=tuple, default=(train_ratio,test_ratio,validation_ratio),
+                        help= 'Select data split ratio'
+                              '1 index - train ratio\n'
+                              '2 index - test ratio\n'
+                              '3 index - valid ratio')
+
+
+    args = parser.parse_args()
+
+    return args
+
+
+help='What type of operation you want to perform? \n'
+                             '[1]. Create normal repository - "create" \n'
+                             '[2]. Create Data Science repository - "create_ds" \n'
+                             '[3]. Detete repository - "delete" \n'
+                             '[4]. Print all repositories - "print \n')
 
 def check_missing_values(df):
     total = df.isnull().sum().sort_values(ascending=False)
@@ -58,7 +92,7 @@ def get_outliers_iqr(df, iqr_mul=3):
     return lower_outliers, upper_outliers
 
 
-def normalize(df):
+def normalize_min_max(df):
     """
 
     :param df:
@@ -73,7 +107,7 @@ def normalize(df):
     return df_normalized, scaler
 
 
-def quantile_transformer(df,output_distribution = "normal"):
+def quantile_transformer(df, output_distribution="normal"):
     """
 
     :param df:
@@ -86,12 +120,118 @@ def quantile_transformer(df,output_distribution = "normal"):
     return df
 
 
-def transform_distribution(df, method="yeo-johnson"):
-    #TEGO NIE WYKORZYSTUJE
-    pt = PowerTransformer(method=method, standardize=False)
-    df_gausian = pt.fit_transform(df)
-    return df_gausian, pt
+# def transform_distribution(df, method="yeo-johnson"):
+#     # TEGO NIE WYKORZYSTUJE
+#     pt = PowerTransformer(method=method, standardize=False)
+#     df_gausian = pt.fit_transform(df)
+#     return df_gausian, pt
+
+
+def batch_data():
+    mnist_indexes = df.mnist_index.value_counts()
+    n_mnist_indexes = len(mnist_indexes)
+    eeg_batched = [df[df["mnist_index"] == index][sensors_list].values for index in range(n_mnist_indexes)]
+    images_batched = [X_train[i] for i in range(n_mnist_indexes)]
+    # return transformed dataframe
+    df_batched = pd.DataFrame({"eeg": eeg_batched, "img": images_batched})
+
+    return df_batched
+
+
+def train_test_validation_split(X, y, train_ratio=0.75, test_ratio=0.15, validation_ratio=0.10):
+    #train-test split
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1 - train_ratio)
+
+    #val-test split
+    X_val, X_test, y_val, y_test = train_test_split(X_test, y_test,
+                                                    test_size=test_ratio / (test_ratio + validation_ratio))
+    return X_train, X_test, X_val, y_train, y_test, y_val
 
 
 if __name__ == "__main__":
-    pass
+
+    # Parse data
+
+    args = parser()
+
+
+    # ******************* EEG *************************
+
+    print("Read data....")
+    filename = "mnist-64s.csv"
+    csv_path = os.path.join(config.RAW_EEG_DIR, filename)
+    df = pd.read_csv(csv_path, index_col=0)
+
+    # drop mnist_class
+    df.drop(labels="mnist_class", axis=1, inplace=True, errors="ignore")
+    sensors_list = df.columns[:14]
+
+    print("Make Gaussian....")
+    df[sensors_list] = quantile_transformer(df[sensors_list])
+
+    print("Scale eeg...")
+    df[sensors_list], scaler = normalize_min_max(df[sensors_list])
+
+    print("Save scaller....")
+    scaling_object = scaler
+    filepath = os.path.join(config.MODEL_DIR, "normalizer.h5")
+    save_preprocessing_object(scaling_object, filepath)
+
+    # ******************* IMG *************************
+    print("Scale images....")
+    (X_train, y_train), (_, _) = mnist.load_data()
+    # X_train = X_train[0:1202]
+    # y_train = y_train[0:1202]
+    X_train = X_train.astype("float") / 255.0  # IMG normalization
+
+    # ******************* Data reshaping *************************
+
+    print("Data reshape....")
+    df_batched = batch_data()
+    # resize with interpolation to prefered shape
+    df_batched["eeg"] = df_batched["eeg"].apply(lambda x: cv2.resize(x, (30, 30)))
+    df_batched["img"] = df_batched["img"].apply(lambda x: cv2.resize(x, (30, 30)))
+
+    # Flatten to VAE Dense input
+    df_batched["eeg"] = df_batched["eeg"].apply(lambda x: x.flatten())
+    df_batched["img"] = df_batched["img"].apply(lambda x: x.flatten())
+
+    print("Get features and labels....\n")
+
+    X = df_batched.eeg.values
+    y = df_batched.img.values
+
+    # Squeeze data
+
+    X = np.array([X[i] for i in range(len(X))]).squeeze()
+    y = np.array([y[i] for i in range(len(X))]).squeeze()
+
+    print(f"Features shape : {X.shape}")
+    print(f"Outputs  shape : {y.shape}\n")
+
+    # ***************** Train-test-validation-split **************************
+
+    print("Train-test-valid split..... : \n")
+    X_train, X_test, X_val, y_train, y_test, y_val = train_test_validation_split(X, y)
+
+    print(f"X_train shape : {X_train.shape}")
+    print(f"X_test shape : {X_test.shape}")
+    print(f"X_valid shape : {X_val.shape}")
+
+    print(f"y_train shape : {y_train.shape}")
+    print(f"y_test shape : {y_test.shape}")
+    print(f"X_valid shape : {y_val.shape}")
+
+    # Save to preprocessed data folder
+
+    print(f"\nSave data to {DATA_PREPROCESSED_DIR} ..... : \n")
+
+    np.save(os.path.join(config.DATA_PREPROCESSED_DIR, "X_train"), X_train)
+    np.save(os.path.join(config.DATA_PREPROCESSED_DIR, "X_test"), X_test)
+    np.save(os.path.join(config.DATA_PREPROCESSED_DIR, "X_valid"), X_val)
+
+    np.save(os.path.join(config.DATA_PREPROCESSED_DIR, "y_train"), y_train)
+    np.save(os.path.join(config.DATA_PREPROCESSED_DIR, "y_test"), y_test)
+    np.save(os.path.join(config.DATA_PREPROCESSED_DIR, "y_valid"), y_val)
+
+    print("Data preprocessing was ended")
