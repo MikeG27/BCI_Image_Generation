@@ -11,7 +11,9 @@ from keras import backend as K
 from keras.optimizers import RMSprop
 from keras.metrics import binary_crossentropy
 
-# Custom
+#path
+import sys
+sys.path.append(os.getcwd())
 
 import config
 from config import intermediate_dim, batch_size, latent_dim,epochs

@@ -26,14 +26,14 @@ def experiment(args):
     (x_train, _), (_, _) = mnist.load_data()
     X = x_train[0:n_images]
 
-    cv2.namedWindow('frame', cv2.WINDOW_NORMAL)
-    cv2.setWindowProperty("frame", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+    cv2.namedWindow(f'experiment', cv2.WINDOW_NORMAL)
+    cv2.setWindowProperty("experiment", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
 
     for i in range(len(X)):
         frame = X[i]
         if i == 0:
             time.sleep(start_delay)
-        cv2.imshow('frame', frame)
+        cv2.imshow(f'experiment', frame)
         time.sleep(image_delay)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break

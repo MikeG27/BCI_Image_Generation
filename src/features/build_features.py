@@ -9,9 +9,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, quantile_transform
 from sklearn.preprocessing import PowerTransformer
 
+# path
+import sys
+
+sys.path.append(os.getcwd())
+
 import config
 from config import DATA_PREPROCESSED_DIR
-from config import train_ratio,test_ratio,validation_ratio
+from config import train_ratio, test_ratio, validation_ratio
 from src.utils.preprocessing import save_preprocessing_object
 
 
@@ -21,23 +26,16 @@ def parser():
     parser.add_argument('-f', type=str, default="mnist-64s.csv",
                         help="csv file in raw folder")
 
-    parser.add_argument('-s', type=tuple, default=(train_ratio,test_ratio,validation_ratio),
-                        help= 'Select data split ratio'
-                              '1 index - train ratio\n'
-                              '2 index - test ratio\n'
-                              '3 index - valid ratio')
-
+    parser.add_argument('-s', type=float, nargs="+", default=(train_ratio, test_ratio, validation_ratio),
+                        help='Select data split ratio'
+                             '1 index - train ratio\n'
+                             '2 index - test ratio\n'
+                             '3 index - valid ratio')
 
     args = parser.parse_args()
 
     return args
 
-
-help='What type of operation you want to perform? \n'
-                             '[1]. Create normal repository - "create" \n'
-                             '[2]. Create Data Science repository - "create_ds" \n'
-                             '[3]. Detete repository - "delete" \n'
-                             '[4]. Print all repositories - "print \n')
 
 def check_missing_values(df):
     total = df.isnull().sum().sort_values(ascending=False)
@@ -138,27 +136,36 @@ def batch_data():
     return df_batched
 
 
-def train_test_validation_split(X, y, train_ratio=0.75, test_ratio=0.15, validation_ratio=0.10):
-    #train-test split
+def train_test_validation_split(X, y, train_ratio, test_ratio, validation_ratio):
+    # train-test split
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=1 - train_ratio)
 
-    #val-test split
+    # val-test split
     X_val, X_test, y_val, y_test = train_test_split(X_test, y_test,
                                                     test_size=test_ratio / (test_ratio + validation_ratio))
     return X_train, X_test, X_val, y_train, y_test, y_val
 
 
 if __name__ == "__main__":
-
     # Parse data
 
     args = parser()
+
+    filename = args.f
+    train_ratio = args.s[0]
+    test_ratio = args.s[1]
+    validation_ratio = args.s[2]
+
+    print(f"Train ratio : {train_ratio}")
+    print(f"Test ratio : {train_ratio}")
+    print(f"Validation ratio : {train_ratio}\n")
+
 
 
     # ******************* EEG *************************
 
     print("Read data....")
-    filename = "mnist-64s.csv"
+    # filename = "mnist-64s.csv"
     csv_path = os.path.join(config.RAW_EEG_DIR, filename)
     df = pd.read_csv(csv_path, index_col=0)
 
@@ -212,7 +219,9 @@ if __name__ == "__main__":
     # ***************** Train-test-validation-split **************************
 
     print("Train-test-valid split..... : \n")
-    X_train, X_test, X_val, y_train, y_test, y_val = train_test_validation_split(X, y)
+    X_train, X_test, X_val, y_train, y_test, y_val = train_test_validation_split(X, y, train_ratio=train_ratio
+                                                                                 , test_ratio=test_ratio,
+                                                                                 validation_ratio=validation_ratio)
 
     print(f"X_train shape : {X_train.shape}")
     print(f"X_test shape : {X_test.shape}")
