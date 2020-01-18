@@ -1,0 +1,39 @@
+md5: 500728e0cc50dfe5ba2bf48433694f85
+cmd: python src/features/build_features.py
+wdir: .
+deps:
+- md5: b2044b2f8d105f224be2a89862d78d4a
+  path: src/features/build_features.py
+- md5: cd534e8a648fe6b5265e4d81edd6d5cc
+  path: data/raw/EEG/mnist-64s.csv
+outs:
+- md5: de6d0aaf3812bd45a07c85eebe4f8e69
+  path: data/preprocessed/X_test.npy
+  cache: true
+  metric: false
+  persist: false
+- md5: d52581d87ef134b4bfc77418be4038d2
+  path: data/preprocessed/X_train.npy
+  cache: true
+  metric: false
+  persist: false
+- md5: 6a6f4dfdb48494c28d0060f2e1cde6c9
+  path: data/preprocessed/X_valid.npy
+  cache: true
+  metric: false
+  persist: false
+- md5: fe4e087c727eded2f34cfd9e5b61e179
+  path: data/preprocessed/y_train.npy
+  cache: true
+  metric: false
+  persist: false
+- md5: aa4a407b8c468468035524566da2dd9d
+  path: data/preprocessed/y_test.npy
+  cache: true
+  metric: false
+  persist: false
+- md5: 8edff82cb69735943756c2296ebdff17
+  path: data/preprocessed/y_valid.npy
+  cache: true
+  metric: false
+  persist: false
