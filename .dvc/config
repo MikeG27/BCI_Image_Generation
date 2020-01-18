@@ -1,0 +1,6 @@
+['remote "myremote"']
+url = gdrive://1lHRONoN8sk6g0lWM0SOAI4JKXxWr9r7B/dvc
+[core]
+remote = myremote2
+['remote "myremote2"']
+url = /tmp/dvc-storage
