@@ -1,13 +1,13 @@
-md5: 655708764d9db62112c10e70afa76953
+md5: 659ce7798f7396366959f07770221a60
 cmd: python src/models/train_model.py
-wdir: .
+wdir: ..
 deps:
 - md5: 5b08a5566095ebe1414632735a29e376
   path: src/models/train_model.py
-- md5: 23603eac9b98195aabd5ed8265e692aa.dir
+- md5: f15e67cb1b827ad9cfa2c998bb9c7b36.dir
   path: data/preprocessed
 outs:
-- md5: 34cd5ffac3a3bf0b5cfd07e24be4ef0a
+- md5: a55c3fdb2107c730359593bf1989c9be
   path: models/VAE.hdf5
   cache: true
   metric: false
