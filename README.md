@@ -12,12 +12,13 @@ Tasks:
 ------------------
 
 0. ~~Do reseach about generative models~~
-1. ~~**Prepare software 4 experiment** as visual stimulus~~ 
+1. ~~**Prepare software for experiment**~~ 
 2. ~~**Get EEG data** from [Emotiv EPOC Neuroheadset](https://www.emotiv.com/epoc/)~~
 3. ~~Perform data analysis~~
-5. Build **preprocessing** pipeline
+5. ~~Build **preprocessing** pipeline~~
 3. ~~**Train VAE** to generate visual stimuly based on EEG signal~~ 
 4. ~~**Train** CNN classifier in order to classify generated images~~
+5. Get more and better EEG Data
 5. **Build web aplication** to test both models 
 6. [Optionally] **Build other generative architecture** (GAN)
 
