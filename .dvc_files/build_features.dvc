@@ -1,38 +1,38 @@
-md5: 2984d6bb4ca0ee871253e8cc6557d9f5
+md5: dda9da0d3e9d3479202863e6ef0c3a31
 cmd: python src/features/build_features.py
 wdir: ..
 deps:
-- md5: b2044b2f8d105f224be2a89862d78d4a
+- md5: 07e3b664a4bfaad64202b49b06f42f43
   path: src/features/build_features.py
-- md5: cd534e8a648fe6b5265e4d81edd6d5cc
-  path: data/raw/EEG/mnist-64s.csv
+- md5: 0dfb9cb3f363e5d6c7d0a955adb4231c.dir
+  path: data/raw
 outs:
-- md5: 435d2e5774c899e6058fc8160e642d22
-  path: data/preprocessed/X_test.npy
-  cache: true
-  metric: false
-  persist: false
-- md5: 6541b139855d25f61ea7cfa74bf46ce1
+- md5: 5f30abf2b528743b1bb7d05d7bfa4b45
   path: data/preprocessed/X_train.npy
   cache: true
   metric: false
   persist: false
-- md5: 5353bdee3500fdedf22ba9d282a6edcd
+- md5: 432c85386b291d34781b5c1bcf8142a1
+  path: data/preprocessed/X_test.npy
+  cache: true
+  metric: false
+  persist: false
+- md5: 8c4068149c85002670fd135cdbce0ed2
   path: data/preprocessed/X_valid.npy
   cache: true
   metric: false
   persist: false
-- md5: e29870371e9d9f6d4fd6eafc76da1770
+- md5: 1438418253be9b0fcbe0434eba3424ba
   path: data/preprocessed/y_train.npy
   cache: true
   metric: false
   persist: false
-- md5: fb5ccf88ca44cd379b3aee1f4e65a055
+- md5: 067f90be382677a165e95d0dd22ecd62
   path: data/preprocessed/y_test.npy
   cache: true
   metric: false
   persist: false
-- md5: 32ab851281049413eca78266e42e7f5d
+- md5: 68586e4377bc19c4ceddaa7c3fac819a
   path: data/preprocessed/y_valid.npy
   cache: true
   metric: false
