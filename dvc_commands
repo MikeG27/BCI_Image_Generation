@@ -1,0 +1,36 @@
+DOC : https://dvc.org/doc/get-started/visualize
+
+# FEATURES
+dvc run -f .dvc_files/build_features.dvc \
+          -d src/features/build_features.py -d data/raw \
+          -o data/preprocessed/X_train.npy \
+	  -o data/preprocessed/X_test.npy \
+	  -o data/preprocessed/X_valid.npy \
+          -o data/preprocessed/y_train.npy \
+	  -o data/preprocessed/y_test.npy \
+	  -o data/preprocessed/y_valid.npy \
+          python src/features/build_features.py
+
+# TRAINING
+
+dvc run -f .dvc_files/train_models.dvc \
+          -d src/models/train_model.py -d data/preprocessed \
+       	  -o models/VAE.hdf5 \
+	  -M models/metrics.txt \
+          python src/models/train_model.py -e 200
+
+
+# VISUALIZATION 
+
+# Visualize stages 
+dvc pipeline show --ascii .dvc_files/train_models.dvc
+
+# Visualize commands
+dvc pipeline show --ascii .dvc_files/train_models.dvc --commands
+
+# Visualize outputs
+dvc pipeline show --ascii .dvc_files/train_models.dvc --outs
+
+# REPRODUCE EXPERIMENT
+
+dvc repro .dvc_files/train_models.dvc

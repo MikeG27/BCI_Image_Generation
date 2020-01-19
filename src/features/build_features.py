@@ -94,7 +94,7 @@ def normalize_min_max(df):
     """
 
     :param df:
-    :return:
+    :return:it
     """
     columns = df.columns
 
@@ -152,14 +152,16 @@ if __name__ == "__main__":
     args = parser()
 
     filename = args.f
-    train_ratio = args.s[0]
-    test_ratio = args.s[1]
-    validation_ratio = args.s[2]
+    train_ratio_x = args.s[0]
+    test_ratio_x = args.s[1]
+    validation_ratio_x = args.s[2]
+
+    print(train_ratio)
+    print(test_ratio)
 
     print(f"Train ratio : {train_ratio}")
-    print(f"Test ratio : {train_ratio}")
-    print(f"Validation ratio : {train_ratio}\n")
-
+    print(f"Test ratio : {test_ratio}")
+    print(f"Validation ratio : {validation_ratio}\n")
 
 
     # ******************* EEG *************************
@@ -174,7 +176,7 @@ if __name__ == "__main__":
     sensors_list = df.columns[:14]
 
     print("Make Gaussian....")
-    df[sensors_list] = quantile_transformer(df[sensors_list])
+    #df[sensors_list] = quantile_transformer(df[sensors_list])
 
     print("Scale eeg...")
     df[sensors_list], scaler = normalize_min_max(df[sensors_list])
@@ -200,8 +202,8 @@ if __name__ == "__main__":
     df_batched["img"] = df_batched["img"].apply(lambda x: cv2.resize(x, (30, 30)))
 
     # Flatten to VAE Dense input
-    df_batched["eeg"] = df_batched["eeg"].apply(lambda x: x.flatten())
-    df_batched["img"] = df_batched["img"].apply(lambda x: x.flatten())
+    #df_batched["eeg"] = df_batched["eeg"].apply(lambda x: x.flatten())
+    #df_batched["img"] = df_batched["img"].apply(lambda x: x.flatten())
 
     print("Get features and labels....\n")
 
@@ -219,9 +221,9 @@ if __name__ == "__main__":
     # ***************** Train-test-validation-split **************************
 
     print("Train-test-valid split..... : \n")
-    X_train, X_test, X_val, y_train, y_test, y_val = train_test_validation_split(X, y, train_ratio=train_ratio
-                                                                                 , test_ratio=test_ratio,
-                                                                                 validation_ratio=validation_ratio)
+    X_train, X_test, X_val, y_train, y_test, y_val = train_test_validation_split(X, y, train_ratio=train_ratio_x
+                                                                                 , test_ratio=test_ratio_x,
+                                                                                 validation_ratio=validation_ratio_x)
 
     print(f"X_train shape : {X_train.shape}")
     print(f"X_test shape : {X_test.shape}")

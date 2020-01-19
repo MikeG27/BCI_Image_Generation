@@ -4,9 +4,6 @@ import os
 
 # TODO : Rozdzielić ten config
 
-
-
-
 # Preprocessing
 
 image_shape = (30, 30)
@@ -41,6 +38,7 @@ PREPROCESSED_EEG_DIR = os.path.join(DATA_PREPROCESSED_DIR, "EEG")
 MODEL_DIR = os.path.join(ROOT_DIR, "models")
 TENSORBOARD_DIR = os.path.join(MODEL_DIR,"logs/fit/")
 CHECKPOINTER_DIR = os.path.join(MODEL_DIR,"VAE.hdf5")
+
 
 # NOTEBOOKS
 NOTEBOOKS_DIR = os.path.join(ROOT_DIR, "notebooks")
