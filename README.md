@@ -1,6 +1,7 @@
 <h1 align = "center"> BCI Image EEG Generator (in progress)</h1>
 
-![Screenshot from 2020-01-04 23-03-57](https://user-images.githubusercontent.com/21131348/71772164-afb03b80-2f46-11ea-86c4-b5431319245c.png)
+![Screenshot from 2020-01-19 18-16-31](https://user-images.githubusercontent.com/21131348/72685187-df834580-3ae7-11ea-99eb-182c80defa1b.png)
+
 
 
 ## About The Project
