@@ -39,6 +39,8 @@ PREPROCESSED_EEG_DIR = os.path.join(DATA_PREPROCESSED_DIR, "EEG")
 
 # MODELS
 MODEL_DIR = os.path.join(ROOT_DIR, "models")
+TENSORBOARD_DIR = os.path.join(MODEL_DIR,"logs/fit/")
+CHECKPOINTER_DIR = os.path.join(MODEL_DIR,"VAE.hdf5")
 
 # NOTEBOOKS
 NOTEBOOKS_DIR = os.path.join(ROOT_DIR, "notebooks")
