@@ -4,24 +4,6 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-def plot_sample(eeg, img, x=260, y=260):
-    # ??????
-    plt.figure(figsize=(15 ,6))
-    plt.suptitle("Sample data" ,fontsize = 20)
-    plt.subplot(1 ,2 ,1)
-    plt.title("EEG Heatmap" ,size=14)
-
-    eeg_train = cv2.resize(np.array(eeg) ,(x, y))
-    plt.imshow(eeg_train ,cmap=plt.cm.binary)
-    plt.colorbar()
-
-    plt.subplot(1 ,2 ,2)
-    plt.title("Corresponding image" ,size = 14)
-
-    plt.imshow(img,cmap=plt.cm.binary) # normalize image data
-    plt.colorbar()
-    plt.show()
-
 
 def ecdf(data):
     """Compute ECDF for a one-dimensional array of measurements."""
@@ -85,13 +67,13 @@ def plot_learning_curve(history, figsize=(15, 5)):
     fig,ax = plt.subplots(1,1,figsize=figsize)
     # Plot training & validation loss values
     ax.plot(history.history['loss'])
-    # plt.plot(history.history['val_loss'])
+    if "val_loss" in history.history:
+            ax.plot(history.history['val_loss'])
+            plt.legend(['Train', 'Validation'], loc='upper right')
     ax.set_title('Model loss')
     ax.set_ylabel('Loss')
     ax.set_xlabel('Epoch')
     plt.grid()
-    # plt.legend(['Train', 'Test'], loc='upper left')
-    #plt.show()
 
     return fig
 
