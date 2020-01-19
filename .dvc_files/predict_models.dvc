@@ -1,0 +1,14 @@
+md5: 4c3efb20ac17d755273219a099a325b3
+cmd: python src/models/predict_model.py
+wdir: ..
+deps:
+- md5: 57b048f9171925a61ef08de8ac8d6ae1
+  path: src/models/predict_model.py
+- md5: 7f381841ec1a2ce5c78efd089d8f0895
+  path: models/VAE.hdf5
+outs:
+- md5: aa039474fb724580d58b334a27ab43dd
+  path: models/metrics.txt
+  cache: false
+  metric: true
+  persist: false
