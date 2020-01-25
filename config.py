@@ -1,8 +1,5 @@
 import os
 
-# TODO : Change name to something else
-
-# TODO : Rozdzielić ten config
 
 # Preprocessing
 
