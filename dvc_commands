@@ -16,9 +16,14 @@ dvc run -f .dvc_files/build_features.dvc \
 dvc run -f .dvc_files/train_models.dvc \
           -d src/models/train_model.py -d data/preprocessed \
        	  -o models/VAE.hdf5 \
-	  -M models/metrics.txt \
-          python src/models/train_model.py -e 200
+          python src/models/train_model.py -e 400
 
+# EVALUATION
+
+dvc run -f .dvc_files/predict_models.dvc \
+          -d src/models/predict_model.py -d data/preprocessed \
+          -m models/metrics.txt \
+          python src/models/predict_model.py
 
 # VISUALIZATION 
 
