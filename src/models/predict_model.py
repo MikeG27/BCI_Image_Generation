@@ -1,14 +1,12 @@
 import os
 import sys
+sys.path.append(os.getcwd())
 
 import numpy as np
 from tensorflow.keras.models import load_model
 
-sys.path.append(os.getcwd())
+from src.visualization.visualize import evaluate_visually
 import config
-
-
-
 
 if __name__ == "__main__":
     print("\n[EVALUATION STAGE]\n")
@@ -36,3 +34,8 @@ if __name__ == "__main__":
 
     with open(path, "a+") as f:
         f.write("Test Loss = " + str(test_loss) + "\n")
+
+    # SAVE VISUAL EVALUATION
+    fig = evaluate_visually(model, X_test, y_test)
+    filepath = os.path.join(config.FIGURES_DIR, "visual_eval.png")
+    fig.savefig(filepath)

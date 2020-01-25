@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from matplotlib import pyplot as plt
 
 
 def ecdf(data):
@@ -81,3 +82,29 @@ def plot_learning_curve(history, figsize=(15, 5)):
 
 if __name__ == "__main__":
     pass
+
+
+def evaluate_visually(model, X, y, rows=2, cols=6):
+    fig = plt.figure(figsize=(14, 6))
+
+    # cols = 6
+    # rows = 2
+
+    for i in range(1, cols * rows + 1):
+        if i <= cols:
+
+            fig.add_subplot(rows, cols, i)
+            img = y[i].reshape(30, 30)
+            plt.imshow(img, cmap=plt.cm.binary)
+            plt.title("Stimulus")
+
+        else:
+
+            fig.add_subplot(rows, cols, i)
+            x = X[i - cols].reshape(1, 30, 30, 1)
+            x_test_encoded = model.predict(x, batch_size=1).reshape(30, 30)
+            plt.imshow(x_test_encoded, cmap=plt.cm.binary)
+
+            plt.title("From Brain ")
+
+    return fig
