@@ -9,20 +9,6 @@
 The aim of this project is to generate images from human brain based on EEG signal. In order to do this task author build generative neural network architecture called Variational Autoencoder (VAE) .
 For this particular task author get data throught mobile Brain-Computer-Interface of [EMOTIV](https://www.emotiv.com/epoc/) company in order to get data from human brain.
 
-Tasks:
-------------------
-
-0. ~~Do reseach about generative models~~
-1. ~~**Prepare software for experiment**~~ 
-2. ~~**Get EEG data** from [Emotiv EPOC Neuroheadset](https://www.emotiv.com/epoc/)~~
-3. ~~Perform data analysis~~
-5. ~~Build **preprocessing** pipeline~~
-3. ~~**Train VAE** to generate visual stimuly based on EEG signal~~ 
-4. ~~**Train** CNN classifier in order to classify generated images~~
-5. Get more and better EEG Data
-5. **Build web aplication** to test both models 
-6. [Optionally] **Build other generative architecture** (GAN)
-
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -69,29 +55,6 @@ dvc pipeline show --ascii .dvc_files/predict_models.dvc --commands
 dvc metrics show
 ```
 ![Zrzut ekranu 2020-01-28 o 13 48 14](https://user-images.githubusercontent.com/21131348/73265252-da538400-41d4-11ea-818b-fffaf46ee1a1.png)
-
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-
-<!-- CONTACT -->
-## Contact
-
-Em@il : - [gorskimichal27@gmail.com](gorskimichal27@gmail.com) 
-            
-Linkedin : [https://www.linkedin.com/in/migorski/](https://www.linkedin.com/in/migorski/)
-
-
 
 Project Organization
 ------------
@@ -145,4 +108,27 @@ Project Organization
 --------
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+
+<!-- CONTACT -->
+## Contact
+
+Em@il : - [gorskimichal27@gmail.com](gorskimichal27@gmail.com) 
+            
+Linkedin : [https://www.linkedin.com/in/migorski/](https://www.linkedin.com/in/migorski/)
+
+
+
+
 
