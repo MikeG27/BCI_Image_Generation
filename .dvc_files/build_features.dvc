@@ -1,0 +1,39 @@
+md5: f5d99613df6e1fc94a44966feac83791
+cmd: python src/features/build_features.py
+wdir: ..
+deps:
+- md5: 4d08fe98b2642c5529df3cbf65dc1261
+  path: src/features/build_features.py
+- md5: 157fb880563485a2b147269461497a3a.dir
+  path: data/raw
+outs:
+- md5: 7036146e6d96645eaad36adc04a3101f
+  path: data/preprocessed/X_train.npy
+  cache: true
+  metric: false
+  persist: false
+- md5: 9b9e08cebf44905052ef80d637aef42f
+  path: data/preprocessed/X_test.npy
+  cache: true
+  metric: false
+  persist: false
+- md5: 62e777aa8627a371187b5ac986dda36d
+  path: data/preprocessed/X_valid.npy
+  cache: true
+  metric: false
+  persist: false
+- md5: c65326aa524f7c236071ef333123663c
+  path: data/preprocessed/y_train.npy
+  cache: true
+  metric: false
+  persist: false
+- md5: dfd9e7fab007f5d9982d05997f63930a
+  path: data/preprocessed/y_test.npy
+  cache: true
+  metric: false
+  persist: false
+- md5: 8389a1fdb2bbe408aee6af63f8f15b64
+  path: data/preprocessed/y_valid.npy
+  cache: true
+  metric: false
+  persist: false
