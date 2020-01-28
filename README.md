@@ -31,7 +31,7 @@ This is an example of how you may give instructions on setting up your project l
 To get a local copy up and running follow these simple example steps.
 
 
-### Install: 
+## Install: 
 
 ```bash
 git clone "https://github.com/MikeG27/BCI_Image_EEG_Generator.git"
@@ -45,23 +45,31 @@ pip install -r requirements.txt
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-### Usage:
-
-#### Run pipeline 
+### Run pipeline 
 To run the execution pipeline type in terminal  :
 ```bash
 dvc repro .dvc_files/predict_models.dvc
 ```
 
-#### Visualize pipeline stages 
+### Visualize pipeline stages 
 ```bash
 dvc pipeline show --ascii .dvc_files/predict_models.dvc
 ```
+![Zrzut ekranu 2020-01-28 o 13 39 33](https://user-images.githubusercontent.com/21131348/73264869-0ae6ee00-41d4-11ea-8488-becc20c613dd.png)
 
-#### Visualize pipeline commands
+
+### Visualize pipeline commands
 ```bash
 dvc pipeline show --ascii .dvc_files/predict_models.dvc --commands
 ```
+![Zrzut ekranu 2020-01-28 o 13 39 57](https://user-images.githubusercontent.com/21131348/73264797-e2f78a80-41d3-11ea-84eb-ce3ce77f2106.png)
+
+### Show model metrics
+```bash
+dvc metrics show
+```
+![Zrzut ekranu 2020-01-28 o 13 48 14](https://user-images.githubusercontent.com/21131348/73265252-da538400-41d4-11ea-818b-fffaf46ee1a1.png)
+
 
 
 
