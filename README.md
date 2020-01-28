@@ -129,6 +129,8 @@ Em@il : - [gorskimichal27@gmail.com](gorskimichal27@gmail.com)
 Linkedin : [https://www.linkedin.com/in/migorski/](https://www.linkedin.com/in/migorski/)
 
 
+**Created with ♥**
 
+``By Michal Gorski``
 
 
