@@ -62,7 +62,7 @@ def save_traning_metrics(filename,history):
     metrics_loss = round(history.history["loss"][-1], 4)
     metrics_val_loss = round(history.history["val_loss"][-1], 4)
     with open(filename, "w+") as f:
-        f.write(f"{config.loss_function} = " + str(metrics_loss) + "\n")
+        f.write(f"Train {config.loss_function} = " + str(metrics_loss) + "\n")
         f.write(f"Val {config.loss_function} = " + str(metrics_val_loss) + "\n")
 
 

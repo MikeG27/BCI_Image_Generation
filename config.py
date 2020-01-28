@@ -15,7 +15,7 @@ latent_dim = 2
 
 epochs = 1000
 batch_size = 128
-loss_function = "mean_squared_error"
+loss_function = "mean_absolute_error"
 
 #######################################################
 
