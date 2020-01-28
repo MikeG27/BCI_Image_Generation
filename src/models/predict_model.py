@@ -25,17 +25,14 @@ if __name__ == "__main__":
     y_test = y_test.reshape(n_test_samples, config.image_shape[0], config.image_shape[0])
 
     # EVALUATE
-    test_loss = model.evaluate(X_test, y_test)
+    test_loss = round(model.evaluate(X_test, y_test),4)
     print(f"Test loss {round(test_loss, 4)}")
 
     # SAVE METRIC
-    filename = "metrics.txt"
-    path = os.path.join(config.MODEL_DIR, filename)
-
+    path = config.MODEL_TEST_METRICS
     with open(path, "a+") as f:
-        f.write("Test Loss = " + str(test_loss) + "\n")
+        f.write(f"Test {config.loss_function} = " + str(test_loss) + "\n")
 
     # SAVE VISUAL EVALUATION
     fig = evaluate_visually(model, X_test, y_test)
-    filepath = os.path.join(config.FIGURES_DIR, "visual_eval.png")
-    fig.savefig(filepath)
+    fig.savefig(config.FIGURES_VISUAL_EVAL)

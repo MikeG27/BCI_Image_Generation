@@ -16,16 +16,15 @@ sys.path.append(os.getcwd())
 
 import config
 from config import batch_size, epochs
-from config import FIGURES_DIR
 from src.models.callbacks import tensorboard, checkpoint, reduce_lr
 from src.visualization.visualize import plot_learning_curve
 
 
 def parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-e', type=int, default=epochs,
+    parser.add_argument('-epochs', type=int, default=epochs,
                         help='number of epochs')
-    parser.add_argument('-b', type=int, default=batch_size,
+    parser.add_argument('-batch', type=int, default=batch_size,
                         help="batch_size")
 
     args = parser.parse_args()
@@ -63,15 +62,15 @@ def save_traning_metrics(filename,history):
     metrics_loss = round(history.history["loss"][-1], 4)
     metrics_val_loss = round(history.history["val_loss"][-1], 4)
     with open(filename, "w+") as f:
-        f.write("Loss = " + str(metrics_loss) + "\n")
-        f.write("Val Loss = " + str(metrics_val_loss) + "\n")
+        f.write(f"{config.loss_function} = " + str(metrics_loss) + "\n")
+        f.write(f"Val {config.loss_function} = " + str(metrics_val_loss) + "\n")
 
 
 if __name__ == "__main__":
     # Parse Data
     args = parser()
-    batch_size = args.b
-    epochs = args.e
+    batch_size = args.batch
+    epochs = args.epochs
 
     # LOAD DATA
 
@@ -92,9 +91,11 @@ if __name__ == "__main__":
     print(f"X_valid shape : {y_valid.shape}")
 
 
-    # GET MODEL
-
+    # Input shape
     input_shape = (30, 30, 1)
+    width = height = input_shape[1]
+
+    # GET MODEL
     vae = build_vae(input_shape)
     vae.summary()
 
@@ -103,15 +104,15 @@ if __name__ == "__main__":
     n_train_samples = X_train.shape[0]
     n_valid_samples = X_valid.shape[0]
 
-    X_train = X_train.reshape(n_train_samples, input_shape[1], input_shape[1], 1)
-    y_train = y_train.reshape(n_train_samples, input_shape[1], input_shape[1])
-    X_valid = X_valid.reshape(n_valid_samples, input_shape[1], input_shape[1], 1)
-    y_valid = y_valid.reshape(n_valid_samples, input_shape[1], input_shape[1])
+    X_train = X_train.reshape(n_train_samples, width, height, 1)
+    y_train = y_train.reshape(n_train_samples, width , height)
+    X_valid = X_valid.reshape(n_valid_samples, width , height,1)
+    y_valid = y_valid.reshape(n_valid_samples, width , height)
 
     # SET OPTIMIZER AND LOSS
 
     optimizer = optimizers.RMSprop(lr=0.0005, rho=0.9, epsilon=None, decay=0.0)
-    loss = 'mean_squared_error'
+    loss = config.loss_function
     vae.compile(loss=loss, optimizer=optimizer)
 
     # TRAIN VAE
@@ -122,13 +123,10 @@ if __name__ == "__main__":
     # SAVE LEARNING CURVE
     print("Save learning curve as image...")
     fig = plot_learning_curve(history)
-    filepath = os.path.join(FIGURES_DIR, "learning_curve.png")
-    fig.savefig(filepath)
+    fig.savefig(config.FIGURES_LEARNING_CURVE)
 
 
     # SAVE LEARNING METRICS
-
     print("Save learning metrics..")
-    filename = "metrics.txt"
-    path = os.path.join(config.MODEL_DIR, filename)
+    path = config.MODEL_TRAIN_METRICS
     save_traning_metrics(path,history)

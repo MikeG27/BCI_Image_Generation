@@ -12,8 +12,10 @@ validation_ratio=0.10
 # Training
 intermediate_dim = 512
 latent_dim = 2
+
 epochs = 1000
 batch_size = 128
+loss_function = "mean_squared_error"
 
 #######################################################
 
@@ -38,8 +40,10 @@ PREPROCESSED_EEG_DIR = os.path.join(DATA_PREPROCESSED_DIR, "EEG")
 
 # MODELS
 MODEL_DIR = os.path.join(ROOT_DIR, "models")
-TENSORBOARD_DIR = os.path.join(MODEL_DIR,"logs/fit/")
-CHECKPOINTER_DIR = os.path.join(MODEL_DIR,"VAE.hdf5")
+MODEL_TENSORBOARD_DIR = os.path.join(MODEL_DIR, "logs/fit/")
+MODEL_CHECKPOINTER_DIR = os.path.join(MODEL_DIR, "VAE.hdf5")
+MODEL_TRAIN_METRICS = os.path.join(MODEL_DIR, "train_metrics.txt")
+MODEL_TEST_METRICS = os.path.join(MODEL_DIR, "test_metrics.txt")
 
 
 # NOTEBOOKS
@@ -53,3 +57,5 @@ REPORTS_DIR = os.path.join(ROOT_DIR,"reports")
 
 # FIGURES
 FIGURES_DIR = os.path.join(REPORTS_DIR,"figures")
+FIGURES_LEARNING_CURVE = os.path.join(FIGURES_DIR,"learning_curve.png")
+FIGURES_VISUAL_EVAL = os.path.join(FIGURES_DIR,"visual_eval.png")

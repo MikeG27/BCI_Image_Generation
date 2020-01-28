@@ -1,6 +1,15 @@
 DOC : https://dvc.org/doc/get-started/visualize
 
+# DATA
+
+dvc run -f .dvc_files/download_features.dvc \
+        -d src/data/download_dataset.py \
+        -o data/raw \
+        python src/data/download_dataset.py -file_name "mnist-64s.csv"
+
+
 # FEATURES
+
 dvc run -f .dvc_files/build_features.dvc \
           -d src/features/build_features.py -d data/raw \
           -o data/preprocessed/X_train.npy \
@@ -16,26 +25,31 @@ dvc run -f .dvc_files/build_features.dvc \
 dvc run -f .dvc_files/train_models.dvc \
           -d src/models/train_model.py -d data/preprocessed \
        	  -o models/VAE.hdf5 \
-          python src/models/train_model.py -e 400
+       	  -o reports/figures/learning_curve.png \
+       	  -M models/train_metrics.txt\
+          python src/models/train_model.py -e 100
 
 # EVALUATION
 
 dvc run -f .dvc_files/predict_models.dvc \
-          -d src/models/predict_model.py -d data/preprocessed \
-          -m models/metrics.txt \
+          -d src/models/predict_model.py \
+          -d data/preprocessed \
+          -d models/VAE.hdf5 \
+          -o reports/figures/visual_eval.png \
+          -M models/test_metrics.txt \
           python src/models/predict_model.py
 
 # VISUALIZATION 
 
 # Visualize stages 
-dvc pipeline show --ascii .dvc_files/train_models.dvc
+dvc pipeline show --ascii .dvc_files/predict_models.dvc
 
 # Visualize commands
-dvc pipeline show --ascii .dvc_files/train_models.dvc --commands
+dvc pipeline show --ascii .dvc_files/predict_models.dvc --commands
 
 # Visualize outputs
-dvc pipeline show --ascii .dvc_files/train_models.dvc --outs
+dvc pipeline show --ascii .dvc_files/predict_models.dvc --outs
 
 # REPRODUCE EXPERIMENT
 
-dvc repro .dvc_files/train_models.dvc
+dvc repro .dvc_files/predict_models.dvc
