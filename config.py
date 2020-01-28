@@ -26,6 +26,11 @@ RAW_DIR = os.path.join(DATA_DIR, "raw")
 RAW_IMG_DIR = os.path.join(RAW_DIR, "IMG")
 RAW_EEG_DIR = os.path.join(RAW_DIR, "EEG")
 
+# DATASET
+
+GDRIVE_ID = '1nvSTPTUv5r6bc7axUJcz6dKHUjsqdgjm'
+GDRIVE_FILE = "mnist-64s.csv"
+
 # PREPROCESSED
 DATA_PREPROCESSED_DIR = os.path.join(DATA_DIR, "preprocessed")
 PREPROCESSED_IMG_DIR = os.path.join(DATA_PREPROCESSED_DIR, "IMG")
