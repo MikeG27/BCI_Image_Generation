@@ -23,7 +23,7 @@ from src.utils.preprocessing import save_preprocessing_object
 def parser():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-f', type=str, default="mnist-64s.csv",
+    parser.add_argument('-f', type=str, default=config.GDRIVE_FILE,
                         help="csv file in raw folder")
 
     parser.add_argument('-s', type=float, nargs="+", default=(train_ratio, test_ratio, validation_ratio),
@@ -167,7 +167,6 @@ if __name__ == "__main__":
     # ******************* EEG *************************
 
     print("Read data....")
-    # filename = "mnist-64s.csv"
     csv_path = os.path.join(config.RAW_EEG_DIR, filename)
     df = pd.read_csv(csv_path, index_col=0)
 
