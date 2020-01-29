@@ -1,10 +1,26 @@
 import matplotlib.pyplot as plt
-import cv2
+import argparse
+import os
 import numpy as np
 import pandas as pd
 import seaborn as sns
+sns.set_style("whitegrid")
 from matplotlib import pyplot as plt
 
+# path
+import sys
+sys.path.append(os.getcwd())
+
+import config
+
+def parser():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('-f', type=str, default=config.GDRIVE_FILE,
+                        help="csv file in raw folder")
+    args = parser.parse_args()
+
+    return args
 
 def ecdf(data):
     """Compute ECDF for a one-dimensional array of measurements."""
@@ -30,19 +46,21 @@ def plot_sensors_correlation(df,figsize):
 
     figure, axes = plt.subplots(1, 2,sharex=False,figsize=figsize)
 
-    pearson = df.corr(method="pearson")
-    spearman = df.corr(method="spearman")
+    methods = ["pearson","spearman"]
+
+    pearson = df.corr(method=methods[0])
+    spearman = df.corr(method=methods[1])
 
     #############Pearson corelation##################
 
     # Generate mask
-    mask_pearson = generate_mask(pearson)
-    mask_spearman = generate_mask(spearman)
+    pearson_mask = generate_mask(pearson)
+    spearman_mask = generate_mask(spearman)
 
-    plot_heatmap(pearson,mask_pearson,axes[0])
-    plot_heatmap(spearman, mask_spearman, axes[1])
+    build_heatmap(pearson, pearson_mask,axes[0],methods[0])
+    build_heatmap(spearman, spearman_mask,axes[1],methods[1])
 
-    return pearson,spearman
+    return figure
 
 
 def generate_mask(corr):
@@ -50,18 +68,18 @@ def generate_mask(corr):
     mask[np.triu_indices_from(mask)] = True
     return mask
 
-
-def plot_heatmap(corr, mask, ax):
+def build_heatmap(corr, mask,ax,method):
     heatmap = sns.heatmap(corr,
                           square=False,
                           mask=mask,
                           linewidths=0.1,
                           cmap="coolwarm",
                           annot=True,
-                          ax=ax,
+                          ax = ax,
                           cbar=False)
 
-    _ = heatmap.set_title("Spearman Corealation", size=20)
+    _ = heatmap.set_title(f"{method} corealation", size=20)
+
 
 
 def plot_learning_curve(history, figsize=(15, 5)):
@@ -79,16 +97,8 @@ def plot_learning_curve(history, figsize=(15, 5)):
     return fig
 
 
-
-if __name__ == "__main__":
-    pass
-
-
 def evaluate_visually(model, X, y, rows=2, cols=6):
     fig = plt.figure(figsize=(14, 6))
-
-    # cols = 6
-    # rows = 2
 
     for i in range(1, cols * rows + 1):
         if i <= cols:
@@ -105,6 +115,72 @@ def evaluate_visually(model, X, y, rows=2, cols=6):
             x_test_encoded = model.predict(x, batch_size=1).reshape(30, 30)
             plt.imshow(x_test_encoded, cmap=plt.cm.binary)
 
-            plt.title("From Brain ")
+            plt.title("From Brain")
 
     return fig
+
+
+if __name__ == "__main__":
+
+    print("[RUN ANALYTICS..]")
+    # Parse arguments
+    args = parser()
+
+    #load dataframe
+    filename = args.f
+    csv_path = os.path.join(config.RAW_EEG_DIR, filename)
+    df = pd.read_csv(csv_path, index_col=0)
+
+    # drop mnist_class
+    try :
+        df.drop(labels="mnist_class", axis=1, inplace=True, errors="ignore")
+    except :
+        print("mnist_class not_exist")
+
+    # get sensors values
+    sensors_list = df.columns[:14]
+    df_sensors = df[sensors_list]
+
+    # PLOT
+    plt.figure(figsize=(20,10))
+    _ = df_sensors.plot(figsize=(20,10))
+    _ = plt.xlabel("Samples")
+    _ = plt.ylabel("Voltage")
+    _ = plt.title("EEG characteristics")
+    plt.savefig(config.FIGURES_PLOT)
+
+    # BOXPLOT
+    plt.figure(figsize=(20,10))
+    _ = df_sensors.boxplot(figsize=(20,10))
+    plt.savefig(config.FIGURES_BOXPLOT)
+
+    # DISTRIBUTIONS
+    plt.figure(figsize=(20, 20))
+    _ = df_sensors.hist(figsize=(20, 20))
+    plt.savefig(config.FIGURES_DISTRIBUTIONS)
+
+    # PDF
+    plt.figure(figsize=(20, 10))
+    for i, sensor in enumerate(df_sensors.columns):
+        _ = sns.distplot(df_sensors[sensor], hist=False, label=sensor)
+    _ = plt.title("Probability Density Function", size=15)
+    _ = plt.xlabel("Voltage")
+    _ = plt.ylabel("Probability")
+    plt.savefig(config.FIGURES_PDF)
+
+    #ECDF
+    plt.figure(figsize=(20, 10))
+    for i, sensor in enumerate(df_sensors.columns):
+        x, y = ecdf(df_sensors[sensor])
+        plt.plot(x, y, label=sensor)
+
+    _ = plt.title("Empirical Cumulative Density Function ", size=15)
+    _ = plt.xlabel("Voltage")
+    _ = plt.ylabel("Fraction of Data")
+
+    plt.savefig(config.FIGURES_ECDF)
+
+    #CORRELATION (SPEARMAN & PEARSON)
+    figure = plot_sensors_correlation(df_sensors, figsize=(20, 10))
+    plt.savefig(config.FIGURES_CORR)
+

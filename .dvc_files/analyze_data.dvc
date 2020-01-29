@@ -1,0 +1,8 @@
+md5: aafd79a8416d80b3b153484d9da8a77b
+cmd: python src/visualization/visualize.py
+wdir: ..
+deps:
+- md5: 157fb880563485a2b147269461497a3a.dir
+  path: data/raw
+- md5: e13e18f1ab0975e5f6dd059d19c71f14
+  path: src/visualization/visualize.py

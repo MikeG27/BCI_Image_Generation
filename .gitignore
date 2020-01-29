@@ -89,5 +89,5 @@ target/
 .mypy_cache/
 
 # others
-models
-reports
+models/
+reports/

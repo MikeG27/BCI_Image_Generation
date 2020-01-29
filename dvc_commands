@@ -1,11 +1,27 @@
 DOC : https://dvc.org/doc/get-started/visualize
 
+
+PIPELINE STAGES ;
+
+1. GET DATA - download data from gdrive
+2. ANALYSIS - create figures in order to create reports
+3. FEATURES - preprocessing stage + train/test/valid split
+4. TRAINING -
+
 # DATA
 
 dvc run -f .dvc_files/download_features.dvc \
         -d src/data/download_dataset.py \
         -o data/raw \
-        python src/data/download_dataset.py -file_name "mnist-64s.csv"
+        python src/data/download_dataset.py
+
+
+# ANALYSIS
+
+dvc run -f .dvc_files/analyze_data.dvc \
+        -d data/raw \
+        -d src/visualization/visualize.py \
+        python src/visualization/visualize.py
 
 
 # FEATURES

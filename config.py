@@ -57,5 +57,16 @@ REPORTS_DIR = os.path.join(ROOT_DIR,"reports")
 
 # FIGURES
 FIGURES_DIR = os.path.join(REPORTS_DIR,"figures")
+# analysis
+FIGURES_PLOT = os.path.join(FIGURES_DIR,"plot.png")
+FIGURES_BOXPLOT = os.path.join(FIGURES_DIR,"boxplot.png")
+FIGURES_DISTRIBUTIONS = os.path.join(FIGURES_DIR,"distributions.png")
+FIGURES_PDF = os.path.join(FIGURES_DIR,"pdf.png")
+FIGURES_ECDF = os.path.join(FIGURES_DIR,"ecdf.png")
+FIGURES_CORR = os.path.join(FIGURES_DIR,"corr.png")
+
+# training
 FIGURES_LEARNING_CURVE = os.path.join(FIGURES_DIR,"learning_curve.png")
+
+# validation
 FIGURES_VISUAL_EVAL = os.path.join(FIGURES_DIR,"visual_eval.png")

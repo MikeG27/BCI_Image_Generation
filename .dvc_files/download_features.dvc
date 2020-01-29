@@ -1,5 +1,5 @@
-md5: b531db562d5a26f80d1ab0f8a42c4a87
-cmd: python src/data/download_dataset.py -file_name mnist-64s.csv
+md5: 2da4438ff43aff14c059d2d66bc49d7e
+cmd: python src/data/download_dataset.py
 wdir: ..
 deps:
 - md5: b9ff099f45d4c9979c46d0c43ba7d72e
