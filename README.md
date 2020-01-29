@@ -31,6 +31,14 @@ pip install -r requirements.txt
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
+## Pipeline  
+
+1. Download data
+2. Run analytics 
+3. Build features
+4. Train model
+5. Evaluate model
+
 ### Run pipeline 
 To run the execution pipeline type in terminal  :
 ```bash
@@ -41,14 +49,15 @@ dvc repro .dvc_files/predict_models.dvc
 ```bash
 dvc pipeline show --ascii .dvc_files/predict_models.dvc
 ```
-![Zrzut ekranu 2020-01-28 o 13 39 33](https://user-images.githubusercontent.com/21131348/73264869-0ae6ee00-41d4-11ea-8488-becc20c613dd.png)
+![Screenshot from 2020-01-29 16-43-24](https://user-images.githubusercontent.com/21131348/73371819-9042cf00-42b6-11ea-963e-ec66f67b1dae.png)
 
 
 ### Visualize pipeline commands
 ```bash
 dvc pipeline show --ascii .dvc_files/predict_models.dvc --commands
 ```
-![Zrzut ekranu 2020-01-28 o 13 39 57](https://user-images.githubusercontent.com/21131348/73264797-e2f78a80-41d3-11ea-84eb-ce3ce77f2106.png)
+![2](https://user-images.githubusercontent.com/21131348/73371891-ae103400-42b6-11ea-9781-278e429e61c2.png)
+
 
 ### Show model metrics
 ```bash
