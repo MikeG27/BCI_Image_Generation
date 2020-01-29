@@ -11,13 +11,13 @@ from sklearn.preprocessing import PowerTransformer
 
 # path
 import sys
-
 sys.path.append(os.getcwd())
 
 import config
 from config import DATA_PREPROCESSED_DIR
 from config import train_ratio, test_ratio, validation_ratio
 from src.utils.preprocessing import save_preprocessing_object
+from src.utils.memory import optimize_ints,optimize_floats,memory_usage
 
 
 def parser():
@@ -148,7 +148,7 @@ def train_test_validation_split(X, y, train_ratio, test_ratio, validation_ratio)
 
 if __name__ == "__main__":
     # Parse data
-
+    print("[BUILDING FEATURES...]")
     args = parser()
 
     filename = args.f
@@ -174,8 +174,14 @@ if __name__ == "__main__":
     df.drop(labels="mnist_class", axis=1, inplace=True, errors="ignore")
     sensors_list = df.columns[:14]
 
+    print("Optimize memory ...")
+    memory_usage(df)
+    df = optimize_floats(df)
+    df = optimize_ints(df)
+    memory_usage(df)
+
     print("Make Gaussian....")
-    #df[sensors_list] = quantile_transformer(df[sensors_list])
+    df[sensors_list] = quantile_transformer(df[sensors_list])
 
     print("Scale eeg...")
     df[sensors_list], scaler = normalize_min_max(df[sensors_list])
