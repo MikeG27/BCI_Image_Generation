@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from keras.datasets import mnist
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler, quantile_transform
+from sklearn.preprocessing import MinMaxScaler,Normalizer, quantile_transform
 from sklearn.preprocessing import PowerTransformer
 
 # path
@@ -104,6 +104,21 @@ def normalize_min_max(df):
     df_normalized.columns = columns
     return df_normalized, scaler
 
+def data_normalizer(df):
+    """
+
+    :param df:
+    :return:it
+    """
+    columns = df.columns
+
+    scaler = Normalizer()
+    scaler.fit((df))
+    data_normalized = scaler.transform(df)
+    df_normalized = pd.DataFrame(data_normalized)
+    df_normalized.columns = columns
+    return df_normalized, scaler
+
 
 def quantile_transformer(df, output_distribution="normal"):
     """
@@ -125,10 +140,10 @@ def quantile_transformer(df, output_distribution="normal"):
 #     return df_gausian, pt
 
 
-def batch_data():
+def batch_data(df,X_train):
     mnist_indexes = df.mnist_index.value_counts()
     n_mnist_indexes = len(mnist_indexes)
-    eeg_batched = [df[df["mnist_index"] == index][sensors_list].values for index in range(n_mnist_indexes)]
+    eeg_batched = [df[df.mnist_index == index][sensors_list].values for index in range(n_mnist_indexes)]
     images_batched = [X_train[i] for i in range(n_mnist_indexes)]
     # return transformed dataframe
     df_batched = pd.DataFrame({"eeg": eeg_batched, "img": images_batched})
@@ -148,7 +163,7 @@ def train_test_validation_split(X, y, train_ratio, test_ratio, validation_ratio)
 
 if __name__ == "__main__":
     # Parse data
-    print("[BUILDING FEATURES...]")
+    print("[BUILDING FEATURES STAGE...]")
     args = parser()
 
     filename = args.f
@@ -166,33 +181,33 @@ if __name__ == "__main__":
 
     # ******************* EEG *************************
 
-    print("Read data....")
+    # READ DATA
     csv_path = os.path.join(config.RAW_EEG_DIR, filename)
     df = pd.read_csv(csv_path, index_col=0)
 
-    # drop mnist_class
+    # DROP MNIST CLASS
     df.drop(labels="mnist_class", axis=1, inplace=True, errors="ignore")
-    sensors_list = df.columns[:14]
+    sensors_list = df.columns[0:-2]
 
-    print("Optimize memory ...")
+    # Optimize memory
     memory_usage(df)
     df = optimize_floats(df)
     df = optimize_ints(df)
     memory_usage(df)
 
-    print("Make Gaussian....")
-    df[sensors_list] = quantile_transformer(df[sensors_list])
+    # Make Gausian
+    #df[sensors_list] = quantile_transformer(df[sensors_list])
 
-    print("Scale eeg...")
-    df[sensors_list], scaler = normalize_min_max(df[sensors_list])
+    # Scale EEG
+    df[sensors_list], scaler = data_normalizer(df[sensors_list])
 
-    print("Save scaller....")
+    # Save Scaller
     scaling_object = scaler
     filepath = os.path.join(config.MODEL_DIR, "normalizer.h5")
     save_preprocessing_object(scaling_object, filepath)
 
     # ******************* IMG *************************
-    print("Scale images....")
+    # Scale images
     (X_train, y_train), (_, _) = mnist.load_data()
     # X_train = X_train[0:1202]
     # y_train = y_train[0:1202]
@@ -200,23 +215,27 @@ if __name__ == "__main__":
 
     # ******************* Data reshaping *************************
 
-    print("Data reshape....")
-    df_batched = batch_data()
+    print("Tu do poprawienia")
+    # Reshape data
+    df_batched = batch_data(df,X_train)
+
+    # Flatten data before resize
+    # df_batched["eeg"] = df_batched["eeg"].apply(lambda x: x.flatten())
+    # df_batched["img"] = df_batched["img"].apply(lambda x: x.flatten())
+
     # resize with interpolation to prefered shape
-    df_batched["eeg"] = df_batched["eeg"].apply(lambda x: cv2.resize(x, (30, 30)))
-    df_batched["img"] = df_batched["img"].apply(lambda x: cv2.resize(x, (30, 30)))
+    print(df_batched["eeg"][0].shape)
+    df_batched["eeg"] = df_batched["eeg"].apply(lambda x: cv2.resize(x, (config.image_shape[0], config.image_shape[1])))
+    df_batched["img"] = df_batched["img"].apply(lambda x: cv2.resize(x, (config.image_shape[0], config.image_shape[1])))
 
-    # Flatten to VAE Dense input
-    #df_batched["eeg"] = df_batched["eeg"].apply(lambda x: x.flatten())
-    #df_batched["img"] = df_batched["img"].apply(lambda x: x.flatten())
 
-    print("Get features and labels....\n")
 
+
+    # Get features and labels
     X = df_batched.eeg.values
     y = df_batched.img.values
 
     # Squeeze data
-
     X = np.array([X[i] for i in range(len(X))]).squeeze()
     y = np.array([y[i] for i in range(len(X))]).squeeze()
 
@@ -229,7 +248,6 @@ if __name__ == "__main__":
     X_train, X_test, X_val, y_train, y_test, y_val = train_test_validation_split(X, y, train_ratio=train_ratio_x
                                                                                  , test_ratio=test_ratio_x,
                                                                                  validation_ratio=validation_ratio_x)
-
     print(f"X_train shape : {X_train.shape}")
     print(f"X_test shape : {X_test.shape}")
     print(f"X_valid shape : {X_val.shape}")
@@ -250,4 +268,3 @@ if __name__ == "__main__":
     np.save(os.path.join(config.DATA_PREPROCESSED_DIR, "y_test"), y_test)
     np.save(os.path.join(config.DATA_PREPROCESSED_DIR, "y_valid"), y_val)
 
-    print("Data preprocessing was ended")
