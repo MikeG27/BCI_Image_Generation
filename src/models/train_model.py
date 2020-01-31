@@ -8,7 +8,7 @@ from tensorflow.keras.layers import Input, Dense, BatchNormalization
 from tensorflow.keras.models import Model
 from tensorflow.keras import optimizers
 from tensorflow.keras.layers import BatchNormalization
-from tensorflow.keras.layers import Conv2D, MaxPooling2D, UpSampling2D, Reshape
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, UpSampling2D, Reshape,Dropout
 from tensorflow.keras.layers import Dense, Activation
 
 
@@ -40,18 +40,23 @@ def build_vae(input_shape):
 
     # encoder
     input_img = Input(batch_shape=(None,width,height,channels))
-    squeeze = Conv2D(256, 3, 3, padding='same', input_shape=input_shape)(input_img)
-    squeeze = Activation('relu')(squeeze)
+    squeeze = Conv2D(128, 3, 3, padding='same', input_shape=input_shape,activation="relu")(input_img)
     squeeze = BatchNormalization()(squeeze)
     squeeze = MaxPooling2D(pool_size=(2, 2))(squeeze)
+    squeeze = Dropout(0.5)(squeeze)
+    # squeeze = UpSampling2D(size=(2, 2))(squeeze)
+    # squeeze = Conv2D(128, 3, 3, padding='same', input_shape=input_shape,activation="relu")(squeeze)
+    # squeeze = BatchNormalization()(squeeze)
+    # squeeze = MaxPooling2D(pool_size=(2, 2))(squeeze)
     squeeze = UpSampling2D(size=(2, 2))(squeeze)
 
     # bottleneck
-    squeeze = Conv2D(128, 3, 3, kernel_initializer='glorot_uniform')(squeeze)
+    squeeze = Conv2D(128, 3, 3, activation="relu")(squeeze)
 
-    squeeze0 = Activation('relu')(squeeze)
-    squeeze0 = Dense(100)(squeeze0)
-    squeeze0 = Reshape((30, 30))(squeeze0)
+    #squeeze0 = Dense(256)(squeeze)
+    #squeeze0 = Dense(128)(squeez7e0)
+    squeeze0 = Dense(100)(squeeze)
+    squeeze0 = Reshape((config.image_shape[0], config.image_shape[1]))(squeeze0)
     squeeze0 = Activation('relu')(squeeze0)
 
     model = Model(inputs=input_img, outputs=squeeze0)
@@ -67,6 +72,8 @@ def save_traning_metrics(filename,history):
 
 
 if __name__ == "__main__":
+
+    print("[TRAINING STAGE...]")
     # Parse Data
     args = parser()
     batch_size = args.batch
@@ -92,7 +99,7 @@ if __name__ == "__main__":
 
 
     # Input shape
-    input_shape = (30, 30, 1)
+    input_shape = (config.image_shape[0], config.image_shape[1], 1)
     width = height = input_shape[1]
 
     # GET MODEL
@@ -104,14 +111,14 @@ if __name__ == "__main__":
     n_train_samples = X_train.shape[0]
     n_valid_samples = X_valid.shape[0]
 
-    X_train = X_train.reshape(n_train_samples, width, height, 1)
-    y_train = y_train.reshape(n_train_samples, width , height)
-    X_valid = X_valid.reshape(n_valid_samples, width , height,1)
-    y_valid = y_valid.reshape(n_valid_samples, width , height)
+    X_train = X_train.reshape(n_train_samples, config.image_shape[0], config.image_shape[1], 1)
+    y_train = y_train.reshape(n_train_samples, config.image_shape[0] , config.image_shape[1])
+    X_valid = X_valid.reshape(n_valid_samples, config.image_shape[0] , config.image_shape[1],1)
+    y_valid = y_valid.reshape(n_valid_samples, config.image_shape[0] , config.image_shape[1])
 
     # SET OPTIMIZER AND LOSS
 
-    optimizer = optimizers.RMSprop(lr=0.0005, rho=0.9, epsilon=None, decay=0.0)
+    optimizer = optimizers.RMSprop(lr=0.005, rho=0.9, epsilon=None, decay=0.0)
     loss = config.loss_function
     vae.compile(loss=loss, optimizer=optimizer)
 

@@ -1,21 +1,29 @@
 import os
 
+# Data downloading
+DATA_OPTIONS = {"emotiv": {"file": "mnist-64s.csv",
+                      "gdrive": "1nvSTPTUv5r6bc7axUJcz6dKHUjsqdgjm"},
+
+           "flex": {"file": "mnist-FLEX.csv",
+                    "gdrive": "1MP8U_X-rQbhPQb-qax-6DMBkBRo-7DYY"}}
+
 
 # Preprocessing
 
-image_shape = (30, 30)
+image_shape = (50,50)
 
-train_ratio=0.75
+train_ratio=0.70
 test_ratio=0.15
-validation_ratio=0.10
+validation_ratio=0.15
+
 
 # Training
 intermediate_dim = 512
 latent_dim = 2
 
-epochs = 1000
-batch_size = 128
-loss_function = "mean_absolute_error"
+epochs = 200
+batch_size = 16
+loss_function = "mean_squared_error"
 
 #######################################################
 
@@ -29,9 +37,8 @@ RAW_IMG_DIR = os.path.join(RAW_DIR, "IMG")
 RAW_EEG_DIR = os.path.join(RAW_DIR, "EEG")
 
 # DATASET
-
-GDRIVE_ID = '1nvSTPTUv5r6bc7axUJcz6dKHUjsqdgjm'
-GDRIVE_FILE = "mnist-64s.csv"
+GDRIVE_ID = DATA_OPTIONS["flex"]["gdrive"]
+GDRIVE_FILE = DATA_OPTIONS["flex"]["file"]
 
 # PREPROCESSED
 DATA_PREPROCESSED_DIR = os.path.join(DATA_DIR, "preprocessed")
@@ -61,7 +68,7 @@ FIGURES_DIR = os.path.join(REPORTS_DIR,"figures")
 FIGURES_PLOT = os.path.join(FIGURES_DIR,"plot.png")
 FIGURES_BOXPLOT = os.path.join(FIGURES_DIR,"boxplot.png")
 FIGURES_DISTRIBUTIONS = os.path.join(FIGURES_DIR,"distributions.png")
-FIGURES_PDF = os.path.join(FIGURES_DIR,"pdf.png")
+FIGURES_PDF = os.path.join(FIGURES_DIR,"histogram.png")
 FIGURES_ECDF = os.path.join(FIGURES_DIR,"ecdf.png")
 FIGURES_CORR = os.path.join(FIGURES_DIR,"corr.png")
 

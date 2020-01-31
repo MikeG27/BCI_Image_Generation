@@ -13,6 +13,7 @@ sys.path.append(os.getcwd())
 
 import config
 
+
 def parser():
     parser = argparse.ArgumentParser()
 
@@ -21,6 +22,12 @@ def parser():
     args = parser.parse_args()
 
     return args
+
+
+def set_figure_size(df):
+    n_features = df.shape[1]
+    figsize = (n_features*1.2,n_features/2)
+    return figsize
 
 def ecdf(data):
     """Compute ECDF for a one-dimensional array of measurements."""
@@ -104,20 +111,21 @@ def evaluate_visually(model, X, y, rows=2, cols=6):
         if i <= cols:
 
             fig.add_subplot(rows, cols, i)
-            img = y[i].reshape(30, 30)
+            img = y[i].reshape(config.image_shape[0], config.image_shape[1])
             plt.imshow(img, cmap=plt.cm.binary)
             plt.title("Stimulus")
 
         else:
 
             fig.add_subplot(rows, cols, i)
-            x = X[i - cols].reshape(1, 30, 30, 1)
-            x_test_encoded = model.predict(x, batch_size=1).reshape(30, 30)
+            x = X[i - cols].reshape(1, config.image_shape[0], config.image_shape[1], 1)
+            x_test_encoded = model.predict(x, batch_size=1).reshape(config.image_shape[0], config.image_shape[1])
             plt.imshow(x_test_encoded, cmap=plt.cm.binary)
 
             plt.title("From Brain")
 
     return fig
+
 
 
 if __name__ == "__main__":
@@ -138,29 +146,34 @@ if __name__ == "__main__":
         print("mnist_class not_exist")
 
     # get sensors values
-    sensors_list = df.columns[:14]
+    sensors_list = df.columns[0:-1] #without mnist_index
     df_sensors = df[sensors_list]
 
-    # PLOT
-    plt.figure(figsize=(20,10))
-    _ = df_sensors.plot(figsize=(20,10))
+    # set figure size
+    figsize = set_figure_size(df_sensors)
+
+    # # PLOT
+    plt.figure(figsize=figsize)
+    _ = df_sensors.plot(figsize=figsize)
     _ = plt.xlabel("Samples")
     _ = plt.ylabel("Voltage")
     _ = plt.title("EEG characteristics")
     plt.savefig(config.FIGURES_PLOT)
 
-    # BOXPLOT
-    plt.figure(figsize=(20,10))
-    _ = df_sensors.boxplot(figsize=(20,10))
+    # # BOXPLOT
+    plt.figure(figsize=figsize)
+    _ = df_sensors.boxplot(figsize=figsize)
+    _ = plt.title("EEG boxplot")
     plt.savefig(config.FIGURES_BOXPLOT)
 
     # DISTRIBUTIONS
-    plt.figure(figsize=(20, 20))
-    _ = df_sensors.hist(figsize=(20, 20))
+    plt.figure(figsize=figsize)
+    _ = df_sensors.hist(figsize=figsize,bins=df_sensors.shape[1]*2)
+    _ = plt.title("EEG histogram")
     plt.savefig(config.FIGURES_DISTRIBUTIONS)
 
-    # PDF
-    plt.figure(figsize=(20, 10))
+    # # PDF
+    plt.figure(figsize=figsize)
     for i, sensor in enumerate(df_sensors.columns):
         _ = sns.distplot(df_sensors[sensor], hist=False, label=sensor)
     _ = plt.title("Probability Density Function", size=15)
@@ -168,8 +181,8 @@ if __name__ == "__main__":
     _ = plt.ylabel("Probability")
     plt.savefig(config.FIGURES_PDF)
 
-    #ECDF
-    plt.figure(figsize=(20, 10))
+    # #ECDF
+    plt.figure(figsize=figsize)
     for i, sensor in enumerate(df_sensors.columns):
         x, y = ecdf(df_sensors[sensor])
         plt.plot(x, y, label=sensor)
@@ -180,7 +193,8 @@ if __name__ == "__main__":
 
     plt.savefig(config.FIGURES_ECDF)
 
-    #CORRELATION (SPEARMAN & PEARSON)
-    figure = plot_sensors_correlation(df_sensors, figsize=(20, 10))
+    # #CORRELATION (SPEARMAN & PEARSON)
+    figure = plot_sensors_correlation(df_sensors, figsize=figsize)
+    plt.colorbar()
     plt.savefig(config.FIGURES_CORR)
 
