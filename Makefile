@@ -8,7 +8,7 @@ PROJECT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 BUCKET = [OPTIONAL] your-bucket-for-syncing-data (do not include 's3://')
 PROFILE = default
 PROJECT_NAME = eeg2image
-PYTHON_INTERPRETER = python3
+PYTHON_INTERPRETER = python3.6
 
 ifeq (,$(shell which conda))
 HAS_CONDA=False
@@ -59,7 +59,7 @@ create_environment:
 ifeq (True,$(HAS_CONDA))
 		@echo ">>> Detected conda, creating conda environment."
 ifeq (3,$(findstring 3,$(PYTHON_INTERPRETER)))
-	conda create --name $(PROJECT_NAME) python=3
+	conda create --name $(PROJECT_NAME) python=3.6
 else
 	conda create --name $(PROJECT_NAME) python=2.7
 endif
