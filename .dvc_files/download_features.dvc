@@ -1,11 +1,11 @@
-md5: 2da4438ff43aff14c059d2d66bc49d7e
+md5: 011f89c5230fff2ed177c16d01683cbb
 cmd: python src/data/download_dataset.py
 wdir: ..
 deps:
 - md5: b9ff099f45d4c9979c46d0c43ba7d72e
   path: src/data/download_dataset.py
 outs:
-- md5: 157fb880563485a2b147269461497a3a.dir
+- md5: bcd0823635ad3f5e9907e5ac44a108d2.dir
   path: data/raw
   cache: true
   metric: false

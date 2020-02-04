@@ -1,23 +1,23 @@
-md5: db47ce7c74888566bd575b98bdb3c7b0
+md5: eaec064b92db3146af06a15c2c922547
 cmd: python src/models/train_model.py -e 100
 wdir: ..
 deps:
-- md5: fb2cda1329b93e87e4345e6cebbe0e9d
+- md5: ed79c9664281698e51d24ca599069ee5
   path: src/models/train_model.py
-- md5: 605e8e804d18b357de4b4126e8434420.dir
+- md5: b2e70bf18d40777a203514a1f3fe7687.dir
   path: data/preprocessed
 outs:
-- md5: c4c0762acbafc74b6e20fddb0c63a806
+- md5: b3d3985af666eb99ba4fe49f094161d7
   path: models/VAE.hdf5
   cache: true
   metric: false
   persist: false
-- md5: 83d6d6ff671d454ea853c56a56007709
+- md5: 05eca5aec6b168618b0edb4e768e94a9
   path: reports/figures/learning_curve.png
   cache: true
   metric: false
   persist: false
-- md5: 0195ec6682f46b42922bbe4e2744a688
+- md5: c1f22b313a432801d8a72936f4138f51
   path: models/train_metrics.txt
   cache: false
   metric: true
