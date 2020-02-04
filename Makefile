@@ -76,6 +76,10 @@ endif
 test_environment:
 	$(PYTHON_INTERPRETER) test_environment.py
 
+## Run experiment pipeline
+run_experiment:
+	dvc repro .dvc_files/predict_models.dvc
+
 #################################################################################
 # PROJECT RULES                                                                 #
 #################################################################################

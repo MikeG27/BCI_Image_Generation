@@ -47,13 +47,13 @@ dvc run -f .dvc_files/train_models.dvc \
 
 # EVALUATION
 
-dvc run -f .dvc_files/predict_models.dvc \
-          -d src/models/predict_model.py \
+dvc run -f .dvc_files/test_model.dvc \
+          -d src/models/test_model.py \
           -d data/preprocessed \
           -d models/VAE.hdf5 \
           -o reports/figures/visual_eval.png \
           -M models/test_metrics.txt \
-          python src/models/predict_model.py
+          python src/models/test_model.py
 
 # VISUALIZATION 
 
