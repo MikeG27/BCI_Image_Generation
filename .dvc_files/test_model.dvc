@@ -1,0 +1,21 @@
+md5: ba1b8165497b576faff92ab59d0d0523
+cmd: python src/models/test_model.py
+wdir: ..
+deps:
+- md5: da61ce4c446883b3c0bd2c49b6f6f6fa
+  path: src/models/test_model.py
+- md5: aa53bf5cb71d153c8c072870fabed0e9.dir
+  path: data/preprocessed
+- md5: 89e0d7f854733beb8b46c7b40c4ed9fd
+  path: models/VAE.hdf5
+outs:
+- md5: b0dd3c7d1e80886a39591d050301be9b
+  path: reports/figures/visual_eval.png
+  cache: true
+  metric: false
+  persist: false
+- md5: ebb3d2dc7736c58d237f91917f91d76a
+  path: models/test_metrics.txt
+  cache: false
+  metric: true
+  persist: false
