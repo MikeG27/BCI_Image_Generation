@@ -78,7 +78,7 @@ test_environment:
 
 ## Run experiment pipeline
 run_experiment:
-	dvc repro .dvc_files/predict_models.dvc
+	dvc repro .dvc_files/test_models.dvc
 
 #################################################################################
 # PROJECT RULES                                                                 #
