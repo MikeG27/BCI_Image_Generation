@@ -58,14 +58,14 @@ dvc run -f .dvc_files/test_model.dvc \
 # VISUALIZATION 
 
 # Visualize stages 
-dvc pipeline show --ascii .dvc_files/predict_models.dvc
+dvc pipeline show --ascii .dvc_files/test.dvc
 
 # Visualize commands
-dvc pipeline show --ascii .dvc_files/predict_models.dvc --commands
+dvc pipeline show --ascii .dvc_files/test.dvc --commands
 
 # Visualize outputs
-dvc pipeline show --ascii .dvc_files/predict_models.dvc --outs
+dvc pipeline show --ascii .dvc_files/test.dvc --outs
 
 # REPRODUCE EXPERIMENT
 
-dvc repro .dvc_files/predict_models.dvc
+dvc repro .dvc_files/test.dvc
