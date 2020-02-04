@@ -2,6 +2,9 @@ import os
 
 import numpy as np
 from tensorflow.keras.models import load_model
+# path
+import sys
+sys.path.append(os.getcwd())
 
 from src.visualization.visualize import evaluate_visually
 import config
