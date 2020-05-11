@@ -22,7 +22,10 @@ To get a local copy up and running follow these simple example steps.
 ```bash
 git clone "https://github.com/MikeG27/BCI_Image_EEG_Generator.git"
 cd BCI_Image_EEG_Generator
+make create_environment
+conda activate eeg2image
 pip install -r requirements.txt
+make test_environment
 ```
 
 
