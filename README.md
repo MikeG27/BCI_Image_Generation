@@ -42,19 +42,21 @@ Use this space to show useful examples of how a project can be used. Additional 
 ### Run pipeline 
 To run the execution pipeline type in terminal  :
 ```bash
-dvc repro .dvc_files/predict_models.dvc
+dvc repro .dvc_files/train_models.dvc
+or 
+make run_experiment
 ```
 
 ### Visualize pipeline stages 
 ```bash
-dvc pipeline show --ascii .dvc_files/predict_models.dvc
+dvc pipeline show --ascii .dvc_files/test_model.dvc
 ```
 ![Screenshot from 2020-01-29 16-43-24](https://user-images.githubusercontent.com/21131348/73371819-9042cf00-42b6-11ea-963e-ec66f67b1dae.png)
 
 
 ### Visualize pipeline commands
 ```bash
-dvc pipeline show --ascii .dvc_files/predict_models.dvc --commands
+dvc pipeline show --ascii .dvc_files/test_model.dvc --commands
 ```
 ![2](https://user-images.githubusercontent.com/21131348/73371891-ae103400-42b6-11ea-9781-278e429e61c2.png)
 
